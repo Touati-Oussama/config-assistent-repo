@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8083
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/assistent
+    url: jdbc:postgresql://localhost:5432/ai_analysis
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD}
   jpa:
@@ -21,23 +21,20 @@ spring:
       properties:
         spring.json.add.type.headers: false
     consumer:
-      group-id: document-service
+      group-id: ai-analyse-service
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: com.example.documentservice.dto.event
-        spring.json.value.default.type: com.example.documentservice.dto.event.DocumentAnalysisResult
+        spring.json.trusted.packages: com.example.aianalyseservice.dto.event
+        spring.json.value.default.type: com.example.aianalyseservice.dto.event.DocumentUploadedEvent
         spring.json.use.type.headers: false
 
-document-service:
-  storage:
-    path: ./storage/document-service
+ai-analyse-service:
   kafka:
     topic:
-      document-events: document-events
       document-uploaded: document-uploaded
-      analysis-results: document-analysis-results
+      document-analyzed: document-analyzed
 
 eureka:
   client:
