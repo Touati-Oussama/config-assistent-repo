@@ -13,6 +13,28 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+    consumer:
+      group-id: document-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.example.documentservice.dto.event
+        spring.json.value.default.type: com.example.documentservice.dto.event.DocumentAnalysisResult
+        spring.json.use.type.headers: false
+
+document-service:
+  kafka:
+    topic:
+      document-events: document-events
+      analysis-results: document-analysis-results
 
 eureka:
   client:
