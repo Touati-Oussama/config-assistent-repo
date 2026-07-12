@@ -34,7 +34,7 @@ ai-analyse-service:
   kafka:
     topic:
       document-uploaded: document-uploaded
-      document-analyzed: document-analyzed
+      analysis-results: document-analysis-results
 
 eureka:
   client:
